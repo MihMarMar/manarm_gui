@@ -1,4 +1,10 @@
-from guizero import App
+import tkinter as tk
 
-app = App(title="ManArm control")
-app.display()
+form = tk.Tk()
+form.title("ManArm controller")
+myLabel = tk.Label(form, text="ManArm controller")
+myLabel.pack()
+
+# add notebook
+
+form.mainloop()
