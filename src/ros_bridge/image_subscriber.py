@@ -8,8 +8,8 @@ from sensor_msgs.msg import CompressedImage
 
 
 class ImageSubscriber:
-    cv_image = np.zeros((640, 480, 3), np.uint8)
-    last_msg_seq = 0
+    cv_image = np.zeros((480, 640, 3), np.uint8)
+    last_msg_seq = -1
 
     def __init__(self):
         self.bridge = CvBridge()
@@ -19,7 +19,7 @@ class ImageSubscriber:
     def msg_cb(self, data):
         self.last_msg_seq = data.header.seq
         try:
-            self.cv_image = self.bridge.compressed_imgmsg_to_cv2(data, "passthrough")
+            self.cv_image = cv2.cvtColor(self.bridge.compressed_imgmsg_to_cv2(data, "passthrough"), cv2.COLOR_BGR2RGB)
         except CvBridgeError as e:
             print e
 

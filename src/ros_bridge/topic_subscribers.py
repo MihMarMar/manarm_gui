@@ -6,23 +6,22 @@ from src.ros_bridge.image_subscriber import ImageSubscriber
 
 # singleton for all subscribers
 # noinspection PyClassHasNoInit
-class TopicSubscribers:
-    instance = None
+class Singleton:
+    __instance = None
 
-    class __TopicSubscribers:
+    @staticmethod
+    def get_instance():
+        """ Static access method. """
+        if Singleton.__instance is None:
+            Singleton()
+        return Singleton.__instance
 
-        def __init__(self):
+    def __init__(self):
+        """ Virtually private constructor. """
+        if Singleton.__instance is not None:
+            raise Exception("This class is a singleton!")
+        else:
             rospy.init_node("manarm_gui")
+            Singleton.__instance = self
             self.axes_subscriber = AxesSubscriber()
             self.image_subscriber = ImageSubscriber()
-
-    def __new__(cls, *args, **kwargs):
-        if not TopicSubscribers.instance:
-            TopicSubscribers.instance = TopicSubscribers.__TopicSubscribers()
-        return TopicSubscribers.instance
-
-    def __getattr__(self, name):
-        return getattr(self.instance, name)
-
-    def __setattr__(self, key, value):
-        pass

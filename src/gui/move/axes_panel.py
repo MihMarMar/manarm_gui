@@ -2,7 +2,7 @@ import Tkinter as Tk
 from math import degrees
 
 from axis_frame import AxisFrame
-from src.ros_bridge.topic_subscribers import TopicSubscribers
+from src.ros_bridge.topic_subscribers import Singleton
 
 
 class AxesPanel(Tk.Frame):
@@ -10,7 +10,7 @@ class AxesPanel(Tk.Frame):
 
     def __init__(self, parent, **kw):
         Tk.Frame.__init__(self, parent, **kw)
-        self._axes_subscriber = TopicSubscribers().instance.axes_subscriber
+        self._axes_subscriber = Singleton.get_instance().axes_subscriber
         self._axes = []
         for i in range(6):
             self._axes.append(AxisFrame(self, axis_name=self.get_joint_name(i).replace('_', ' ')[:-5]))
