@@ -1,7 +1,5 @@
-import rospy
-
-from src.ros_bridge.axes_subscriber import AxesSubscriber
-from src.ros_bridge.image_subscriber import ImageSubscriber
+from src.ros_bridge.subscribers.axes_subscriber import AxesSubscriber
+from src.ros_bridge.subscribers.image_subscriber import ImageSubscriber
 
 
 # singleton for all subscribers
@@ -21,7 +19,6 @@ class Singleton:
         if Singleton.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
-            rospy.init_node("manarm_gui")
             Singleton.__instance = self
             self.axes_subscriber = AxesSubscriber()
             self.image_subscriber = ImageSubscriber()
